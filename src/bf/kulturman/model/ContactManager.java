@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class ContactManager
 {
 	private Connection db;
@@ -18,6 +20,7 @@ public class ContactManager
 		this.db = db;
 	}
 	
+	public ContactManager(){}
 	public void create(Contact c)
 	{
 		try 
@@ -107,7 +110,7 @@ public class ContactManager
 		
 		catch (SQLException e) 
 		{
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null , e.getMessage());
 		}
 		
 	}

@@ -1,6 +1,8 @@
 package bf.kulturman.view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -17,14 +19,15 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame implements Observer
 {
-	Object[][] data = {new Object[200] , new Object[4]};
+	CMControler ctrl;
+	MyListener listener;
+	//Object[][] data = {new Object[200] , new Object[4]};
 	//Les titres des colonnes
 	String  title[] = {"Identificateur" , "Nom", "Prénom", "Numéro"};
 	DefaultTableModel model = new DefaultTableModel(title , 0);
 	JTable tab = new JTable(model);
 	private JTextField[] userInfos;
     private MyDialog dial;
-    //private String text = "Saisir le nom ou le prénom à  rechercher";
     private MyPanel userImg;
     private MyPanel appImg;
     private JPanel buttonsPanel;
@@ -57,21 +60,10 @@ public class MainWindow extends JFrame implements Observer
         createMenu();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Gestionnaire de contacts");
-		/*SearchZone.setVisible(false);
-        SearchZone.addMouseListener(
-                new MouseAdapter()
-                {
-                    public void mouseClicked(MouseEvent ev)
-                    {
-                        SearchZone.setText("");
-                    }
-                    
-                    public void mouseExited(MouseEvent ev)
-                    {
-                       if(SearchZone.getText().equals(""))
-                           SearchZone.setText(text);
-                    }
-                });*/
+		this.ctrl = ctrl;
+		/*abonnements*/
+		listener = new MyListener();
+		deleteButton.addActionListener(listener);
     }
     
     private void createMenu()
@@ -169,6 +161,17 @@ public class MainWindow extends JFrame implements Observer
 				model.setValueAt(contact.getNumber() , i , 3);
 				i++;
 			}
+		}
+	}
+	
+	class MyListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if(e.getSource() == deleteButton)
+				ctrl.deleteContact(tab.getSelectedRows());
 		}
 	}
 	

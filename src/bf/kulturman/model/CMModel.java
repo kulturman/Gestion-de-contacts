@@ -13,7 +13,6 @@ public class CMModel implements Observable
 	private ArrayList<Observer> observers;
 	private ArrayList<Contact> contactsList;
 	private Connection db;
-	
 	/*le contact ayant le focus*/
 	private Contact focus;
 	
@@ -33,6 +32,11 @@ public class CMModel implements Observable
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Contact> getContactsList()
+	{
+		return contactsList;
 	}
 	
 	@Override
