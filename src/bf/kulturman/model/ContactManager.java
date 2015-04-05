@@ -72,7 +72,7 @@ public class ContactManager
 		Contact c;
 		try
 		{
-			st = db.prepareStatement("SELECT * FROM contact");
+			st = db.prepareStatement("SELECT * FROM contact ORDER BY name , firstname");
 			res = st.executeQuery();
 			contacts = new ArrayList<Contact>();
 			while(res.next())

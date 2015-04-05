@@ -152,10 +152,23 @@ public class MainWindow extends JFrame implements Observer
 			userInfos[3].setText("Date d'anniversaire : " + focus.getBirth());
 			userInfos[4].setText("Numéro : " + focus.getNumber());
 			
+			/*on crée le nombre de lignes supplémentaires qu'il faut*/
+			Object[] obj = new Object[4];
+			int n = (contactsList.size() - model.getRowCount());
+			for(int i = 0 ; i < n ; i++)
+			{
+				model.addRow(obj);
+			}
+			
+			int i = 0;
 			for(Contact contact : contactsList)
-				model.addRow
-				(new String[]{String.valueOf(contact.getId()) , contact.getName() , contact.getFirstname()
-				, contact.getNumber()});
+			{
+				model.setValueAt(contact.getId(), i , 0);
+				model.setValueAt(contact.getName() , i , 1);
+				model.setValueAt(contact.getFirstname() , i , 2);
+				model.setValueAt(contact.getNumber() , i , 3);
+				i++;
+			}
 		}
 	}
 	
