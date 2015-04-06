@@ -1,8 +1,6 @@
 package bf.kulturman.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import bf.kulturman.observer.Observable;
@@ -19,19 +17,11 @@ public class CMModel implements Observable
 	public CMModel()
 	{
 		observers = new ArrayList<Observer>();
-		try 
-		{
-			db = DriverManager.getConnection("jdbc:sqlite:db/db.sqlite");
-			ContactManager manager = new ContactManager(db);
-			contactsList = manager.getAll();
-			if(contactsList.size() > 0)
-				focus = contactsList.get(0);
-		} 
-		
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		db = MyConnection.getConnection("jdbc:sqlite:db/db.sqlite" , "" , "");
+		ContactManager manager = new ContactManager(db);
+		contactsList = manager.getAll();
+		if(contactsList.size() > 0)
+			focus = contactsList.get(0);
 	}
 	
 	public ArrayList<Contact> getContactsList()

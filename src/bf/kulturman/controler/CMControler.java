@@ -1,12 +1,12 @@
 package bf.kulturman.controler;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
+
 import bf.kulturman.model.CMModel;
 import bf.kulturman.model.Contact;
 import bf.kulturman.model.ContactManager;
+import bf.kulturman.model.MyConnection;
 
 public class CMControler 
 {
@@ -16,16 +16,8 @@ public class CMControler
 	public CMControler(CMModel model)
 	{
 		this.model = model;
-		try 
-		{
-			db = DriverManager.getConnection("jdbc:sqlite:db/db.sqlite");
-			manager = new ContactManager(db);
-		} 
-		
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		db = MyConnection.getConnection("jdbc:sqlite:db/db.sqlite" , "" , "");
+		manager = new ContactManager(db);
 	}
 	
 	public void addContact()
