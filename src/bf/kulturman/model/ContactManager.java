@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 public class ContactManager
 {
+	private ContactManager manager;
 	private Connection db;
 	private PreparedStatement st;
 	private ResultSet res;
@@ -21,6 +22,11 @@ public class ContactManager
 	}
 	
 	public ContactManager(){}
+	
+	public Connection getDB()
+	{
+		return db;
+	}
 	public void create(Contact c)
 	{
 		try 

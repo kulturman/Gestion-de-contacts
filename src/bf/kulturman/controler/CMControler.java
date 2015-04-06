@@ -15,17 +15,17 @@ public class CMControler
 	Connection db;
 	public CMControler(CMModel model)
 	{
+		this.model = model;
 		try 
 		{
 			db = DriverManager.getConnection("jdbc:sqlite:db/db.sqlite");
+			manager = new ContactManager(db);
 		} 
 		
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		this.model = model;
-		manager = new ContactManager(db);
 	}
 	
 	public void addContact()
