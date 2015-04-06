@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import bf.kulturman.model.CMModel;
 import bf.kulturman.model.Contact;
 import bf.kulturman.model.ContactManager;
-import bf.kulturman.observer.Observer;
 
 public class CMControler 
 {
@@ -43,8 +41,10 @@ public class CMControler
 			manager.delete(contact.get(row).getId());
 			contact.remove(contact.get(row));
 		}
-		
-		model.notifyObservers(contact , contact.get(0));
+		if(contact.size() > 0)
+			model.notifyObservers(contact , contact.get(0));
+		else
+			model.notifyObservers(contact , null);
 	}	
 	
 	public void viewContact()

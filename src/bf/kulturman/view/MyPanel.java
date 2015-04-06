@@ -32,9 +32,10 @@ public class MyPanel extends JPanel
 		background = b;
 	}
 	
-	
+	@Override
 	public void paintComponent(Graphics g)
 	{
+		super.paintComponent(g);
 		try
 		{
 			Image i = ImageIO.read(new File(background));
@@ -45,7 +46,6 @@ public class MyPanel extends JPanel
 		{
 			System.out.println("exception : " + e.getMessage());
 		}
-		
 	}
 
 }

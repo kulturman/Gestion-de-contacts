@@ -5,16 +5,6 @@ public class Contact
     private String name , firstname , mail , image , birth , number;
     private int id;
 	
-    public void printInfo()
-	{
-		System.out.print(name + " ");
-		System.out.print(firstname + " ");
-		System.out.print(mail+" ");
-		System.out.print(image +" ");
-		System.out.print(birth +" " );
-		System.out.println(number);
-	}
-
     public String getName()
     {
         return name;

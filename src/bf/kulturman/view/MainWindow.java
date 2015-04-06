@@ -147,9 +147,23 @@ public class MainWindow extends JFrame implements Observer
 			/*on crée le nombre de lignes supplémentaires qu'il faut*/
 			Object[] obj = new Object[4];
 			int n = (contactsList.size() - model.getRowCount());
-			for(int i = 0 ; i < n ; i++)
+			
+			/* S'il y a des lignes à ajouter*/
+			if(n > 0)
 			{
-				model.addRow(obj);
+				for(int i = 0 ; i < n ; i++)
+				{
+					model.addRow(obj);
+				}
+			}
+			
+			/* S'il y a des lignes à enlever*/
+			else
+			{
+				for(int i = 0 ; i < - n ; i++)
+				{
+					model.removeRow(0);
+				}
 			}
 			
 			int i = 0;
@@ -161,6 +175,20 @@ public class MainWindow extends JFrame implements Observer
 				model.setValueAt(contact.getNumber() , i , 3);
 				i++;
 			}
+		}
+		
+		/*ici la base de données est vide donc...*/
+		else
+		{
+			userImg.setBackground("images/cont.png");
+			userImg.repaint();
+			userInfos[0].setText("Nom : ");
+			userInfos[1].setText("prénom : ");
+			userInfos[2].setText("Mail : ");
+			userInfos[3].setText("Date d'anniversaire : ");
+			userInfos[4].setText("Numéro : ");
+			if(model.getRowCount() > 0)
+				model.removeRow(0);
 		}
 	}
 	
