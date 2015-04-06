@@ -16,8 +16,7 @@ public class CMControler
 	public CMControler(CMModel model)
 	{
 		this.model = model;
-		db = MyConnection.getConnection("jdbc:sqlite:db/db.sqlite" , "" , "");
-		manager = new ContactManager(db);
+		manager = ContactManager.getContactManager();
 	}
 	
 	public void addContact()
@@ -40,7 +39,7 @@ public class CMControler
 			model.notifyObservers(contact , null);
 	}	
 	
-	/* comme on ne peut pas voir les détails de plusieurs contacts en meme temps, on considère une seule
+	/* comme on ne peut pas voir les détails de plusieurs contacts en meme temps, on considère une seule(ligne)
 	 * et on s'en fout du reste
 	 */
 	public void viewContact(int row)
@@ -48,4 +47,35 @@ public class CMControler
 		if(row != - 1)
 			model.setFocus(model.getContactsList().get(row));
 	}
+	
+	public void orderByBirthDate()
+	{
+		ArrayList<Contact> contact = model.getContactsList();
+		manager.getSortedByBirthDate(model.getContactsList());
+		if(contact.size() > 0)
+			model.notifyObservers(contact , contact.get(0));
+		else
+			model.notifyObservers(contact , null);
+	}
+	
+	public void orderByAddDate()
+	{
+		ArrayList<Contact> contacts = model.getContactsList();
+		manager.getSortedById(contacts);
+		if(contacts.size() > 0)
+			model.notifyObservers(contacts , contacts.get(0));
+		else
+			model.notifyObservers(contacts , null);
+	}
+	
+	public void orderByName()
+	{
+		ArrayList<Contact> contacts = model.getContactsList();
+		manager.getSortedByName(contacts);;
+		if(contacts.size() > 0)
+			model.notifyObservers(contacts , contacts.get(0));
+		else
+			model.notifyObservers(contacts , null);
+	}
+	
 }

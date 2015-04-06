@@ -18,7 +18,7 @@ public class MainWindow extends JFrame implements Observer
 {
 	CMControler ctrl;
 	MyListener listener;
-	String  title[] = {"Identificateur" , "Nom", "Prénom", "Numéro"};
+	String  title[] = {"Nom", "Prénom", "Numéro" , "E-mail"};
 	DefaultTableModel model = new DefaultTableModel(title , 0);
 	JTable tab = new JTable(model);
 	private JTextField[] userInfos;
@@ -61,6 +61,8 @@ public class MainWindow extends JFrame implements Observer
 		view.addActionListener(listener);
 		addContact.addActionListener(listener);
 		Delete.addActionListener(listener);
+		SortByDate.addActionListener(listener);
+		SortByName.addActionListener(listener);
     }
     
     private void createMenu()
@@ -108,13 +110,13 @@ public class MainWindow extends JFrame implements Observer
         Modify   = new JMenuItem("Modifier" ,  new ImageIcon("images/edit.png"));
         Delete   = new JMenuItem("Supprimer" , new ImageIcon("images/delete.png")); 
         addContact = new JMenuItem("Nouveau contact" , new ImageIcon("images/add.png"));
-        SortByBithDate = new JMenuItem("Trier par date d'anniversaire");
+        //SortByBithDate = new JMenuItem("Trier par date d'anniversaire");
         SortByDate = new JMenuItem("Trier par date d'ajout");
         SortByName = new JMenuItem("Trier par nom et prénom");
         Actions.add(addContact);
         Actions.add(Modify);
         Actions.add(Delete);
-        Contacts.add(SortByBithDate);
+        //Contacts.add(SortByBithDate);
         Contacts.add(SortByDate);
         Contacts.add(SortByName);
         Interface.add(MenuBar , BorderLayout.NORTH);
@@ -162,10 +164,10 @@ public class MainWindow extends JFrame implements Observer
 			int i = 0;
 			for(Contact contact : contactsList)
 			{
-				model.setValueAt(contact.getId(), i , 0);
-				model.setValueAt(contact.getName() , i , 1);
-				model.setValueAt(contact.getFirstname() , i , 2);
-				model.setValueAt(contact.getNumber() , i , 3);
+				model.setValueAt(contact.getName(), i , 0);
+				model.setValueAt(contact.getFirstname() , i , 1);
+				model.setValueAt(contact.getNumber() , i , 2);
+				model.setValueAt(contact.getMail() , i , 3);
 				i++;
 			}
 		}
@@ -198,6 +200,10 @@ public class MainWindow extends JFrame implements Observer
 				ctrl.addContact();
 			if(e.getSource() == view)
 				ctrl.viewContact(tab.getSelectedRow());
+			if(e.getSource() == SortByDate)
+				ctrl.orderByAddDate();
+			if(e.getSource() == SortByName)
+				ctrl.orderByName();
 		}
 	}
 	

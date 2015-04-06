@@ -10,23 +10,17 @@ import javax.swing.JOptionPane;
 
 public class ContactManager
 {
-	private ContactManager manager;
+	private static ContactManager manager;
 	private Connection db;
 	private PreparedStatement st;
 	private ResultSet res;
-
-	public ContactManager(Connection db)
+	private CMModel model;
+	
+	private ContactManager()
 	{
-		super();
-		this.db = db;
+		this.db = MyConnection.getConnection("jdbc:sqlite:db/db.sqlite", "" , "");
 	}
 	
-	public ContactManager(){}
-	
-	public Connection getDB()
-	{
-		return db;
-	}
 	public void create(Contact c)
 	{
 		try 
@@ -105,6 +99,90 @@ public class ContactManager
 		}
 	}
 	
+	public void getSortedByBirthDate(ArrayList<Contact> contacts)
+	{
+		try 
+		{
+			st = db.prepareStatement("SELECT * FROM contact ORDER BY birth");
+			res = st.executeQuery();
+			Contact current;
+			int i = 0;
+			while(res.next())
+			{
+				current = contacts.get(i);
+				current.setBirth(res.getString("birth"));
+				current.setName(res.getString("name"));
+				current.setFirstname(res.getString("firstname"));
+				current.setMail(res.getString("mail"));
+				current.setId(res.getInt("id"));
+				current.setImage(res.getString("image"));
+				current.setNumber(res.getString("number"));
+				i++;
+			}
+		} 
+		
+		catch (SQLException e) 
+		{
+			JOptionPane.showMessageDialog(null , e.getMessage());
+		}
+	}
+	
+	public void getSortedById(ArrayList<Contact> contacts)
+	{
+		try 
+		{
+			st = db.prepareStatement("SELECT * FROM contact");
+			res = st.executeQuery();
+			Contact current;
+			int i = 0;
+			while(res.next())
+			{
+				current = contacts.get(i);
+				current.setBirth(res.getString("birth"));
+				current.setName(res.getString("name"));
+				current.setFirstname(res.getString("firstname"));
+				current.setMail(res.getString("mail"));
+				current.setId(res.getInt("id"));
+				current.setImage(res.getString("image"));
+				current.setNumber(res.getString("number"));
+				i++;
+			}
+		} 
+		
+		catch (SQLException e) 
+		{
+			JOptionPane.showMessageDialog(null , e.getMessage());
+		}
+	}
+	
+	public void getSortedByName(ArrayList<Contact> contacts)
+	{
+		try 
+		{
+			st = db.prepareStatement("SELECT * FROM contact ORDER BY name , firstname");
+			res = st.executeQuery();
+			Contact current;
+			int i = 0;
+			while(res.next())
+			{
+				current = contacts.get(i);
+				current.setBirth(res.getString("birth"));
+				current.setName(res.getString("name"));
+				current.setFirstname(res.getString("firstname"));
+				current.setMail(res.getString("mail"));
+				current.setId(res.getInt("id"));
+				current.setImage(res.getString("image"));
+				current.setNumber(res.getString("number"));
+				i++;
+			}
+		} 
+		
+		catch (SQLException e) 
+		{
+			JOptionPane.showMessageDialog(null , e.getMessage());
+		}
+	}
+	
 	public void delete(int id)
 	{
 		try 
@@ -121,5 +199,10 @@ public class ContactManager
 		
 	}
 	
-	
+	public static ContactManager getContactManager()
+	{
+		if(manager == null)
+			manager = new ContactManager();
+		return manager;
+	}
 }

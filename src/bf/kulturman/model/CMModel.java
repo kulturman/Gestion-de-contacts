@@ -17,8 +17,7 @@ public class CMModel implements Observable
 	public CMModel()
 	{
 		observers = new ArrayList<Observer>();
-		db = MyConnection.getConnection("jdbc:sqlite:db/db.sqlite" , "" , "");
-		ContactManager manager = new ContactManager(db);
+		ContactManager manager = ContactManager.getContactManager();
 		contactsList = manager.getAll();
 		if(contactsList.size() > 0)
 			focus = contactsList.get(0);
