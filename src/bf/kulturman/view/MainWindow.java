@@ -3,15 +3,12 @@ package bf.kulturman.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
-
 import bf.kulturman.controler.CMControler;
 import bf.kulturman.model.Contact;
 import bf.kulturman.observer.Observer;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -21,8 +18,6 @@ public class MainWindow extends JFrame implements Observer
 {
 	CMControler ctrl;
 	MyListener listener;
-	//Object[][] data = {new Object[200] , new Object[4]};
-	//Les titres des colonnes
 	String  title[] = {"Identificateur" , "Nom", "Prénom", "Numéro"};
 	DefaultTableModel model = new DefaultTableModel(title , 0);
 	JTable tab = new JTable(model);
@@ -34,7 +29,6 @@ public class MainWindow extends JFrame implements Observer
     private JPanel userInfo;
     private JPanel footer;
     private JPanel contactInfoZone;
-    private JTextField SearchZone;
     private JButton view;
     private JButton modifyButton;
     private JButton deleteButton;
@@ -64,6 +58,9 @@ public class MainWindow extends JFrame implements Observer
 		/*abonnements*/
 		listener = new MyListener();
 		deleteButton.addActionListener(listener);
+		view.addActionListener(listener);
+		addContact.addActionListener(listener);
+		Delete.addActionListener(listener);
     }
     
     private void createMenu()
@@ -91,12 +88,8 @@ public class MainWindow extends JFrame implements Observer
         modifyButton = new JButton("Modifier" ,  new ImageIcon("images/edit.png"));
         view = new JButton("Détails" ,  new ImageIcon("images/view.png"));
         footer = new JPanel(new BorderLayout());
-        //SearchZone = new JTextField(text);
         Interface = new JPanel(new BorderLayout());
-        //Interface.add(SearchZone , BorderLayout.SOUTH);
 		Interface.add(contactInfoZone);
-		//scroll.add(new JTable(data , title));
-		//JTable tab = new JTable(data , title);
 		add(new JScrollPane(tab));
         add(Interface , BorderLayout.NORTH);
         add(footer , BorderLayout.SOUTH);
@@ -181,7 +174,6 @@ public class MainWindow extends JFrame implements Observer
 		else
 		{
 			userImg.setBackground("images/cont.png");
-			userImg.repaint();
 			userInfos[0].setText("Nom : ");
 			userInfos[1].setText("prénom : ");
 			userInfos[2].setText("Mail : ");
@@ -190,6 +182,8 @@ public class MainWindow extends JFrame implements Observer
 			if(model.getRowCount() > 0)
 				model.removeRow(0);
 		}
+		
+		userImg.repaint();
 	}
 	
 	class MyListener implements ActionListener
@@ -198,8 +192,12 @@ public class MainWindow extends JFrame implements Observer
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			if(e.getSource() == deleteButton)
+			if(e.getSource() == deleteButton || e.getSource() == Delete)
 				ctrl.deleteContact(tab.getSelectedRows());
+			if(e.getSource() == addContact)
+				ctrl.addContact();
+			if(e.getSource() == view)
+				ctrl.viewContact(tab.getSelectedRow());
 		}
 	}
 	

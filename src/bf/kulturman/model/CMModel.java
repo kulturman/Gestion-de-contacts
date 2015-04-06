@@ -39,6 +39,17 @@ public class CMModel implements Observable
 		return contactsList;
 	}
 	
+	public Contact getFocus()
+	{
+		return focus;
+	}
+
+	public void setFocus(Contact focus)
+	{
+		this.focus = focus;
+		notifyObservers(contactsList, focus);
+	}
+
 	@Override
 	public void addObserver(Observer obs) 
 	{

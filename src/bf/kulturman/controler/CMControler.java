@@ -33,6 +33,7 @@ public class CMControler
 		
 	}
 	
+	/* rows: représente les lignes sélectionnées*/
 	public void deleteContact(int [] rows)
 	{
 		ArrayList<Contact> contact = model.getContactsList();
@@ -47,7 +48,12 @@ public class CMControler
 			model.notifyObservers(contact , null);
 	}	
 	
-	public void viewContact()
+	/* comme on ne peut pas voir les détails de plusieurs contacts en meme temps, on considère une seule
+	 * et on s'en fout du reste
+	 */
+	public void viewContact(int row)
 	{
+		if(row != - 1)
+			model.setFocus(model.getContactsList().get(row));
 	}
 }
