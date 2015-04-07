@@ -65,6 +65,7 @@ public class Contact
         this.number = number;
     }
 
+    public Contact(){}
     public Contact(String name, String firstname, String mail, String image, String birth, String number)
     {
         this.name = name;

@@ -14,8 +14,7 @@ public class ContactManager
 	private Connection db;
 	private PreparedStatement st;
 	private ResultSet res;
-	private CMModel model;
-	
+
 	private ContactManager()
 	{
 		this.db = MyConnection.getConnection("jdbc:sqlite:db/db.sqlite", "" , "");

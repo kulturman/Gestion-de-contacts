@@ -2,11 +2,10 @@ package bf.kulturman.controler;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-
 import bf.kulturman.model.CMModel;
 import bf.kulturman.model.Contact;
 import bf.kulturman.model.ContactManager;
-import bf.kulturman.model.MyConnection;
+
 
 public class CMControler 
 {
@@ -19,9 +18,13 @@ public class CMControler
 		manager = ContactManager.getContactManager();
 	}
 	
-	public void addContact()
+	public void addContact(Contact c)
 	{
-		
+		manager.create(c);
+		ArrayList<Contact> contact = model.getContactsList();
+		contact.add(c);
+		manager.getSortedByName(contact);
+		model.notifyObservers(contact, contact.get(0));
 	}
 	
 	/* rows: représente les lignes sélectionnées*/

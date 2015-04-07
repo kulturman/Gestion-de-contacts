@@ -1,8 +1,6 @@
 package bf.kulturman.model;
 
-import java.sql.Connection;
 import java.util.ArrayList;
-
 import bf.kulturman.observer.Observable;
 import bf.kulturman.observer.Observer;
 
@@ -10,7 +8,6 @@ public class CMModel implements Observable
 {
 	private ArrayList<Observer> observers;
 	private ArrayList<Contact> contactsList;
-	private Connection db;
 	/*le contact ayant le focus*/
 	private Contact focus;
 	

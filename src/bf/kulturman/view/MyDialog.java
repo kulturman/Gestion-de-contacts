@@ -2,8 +2,8 @@ package bf.kulturman.view;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.*;
 import javax.swing.filechooser.*;
+import bf.kulturman.model.Contact;
 
 @SuppressWarnings("serial")
 public class MyDialog extends JDialog implements ActionListener
@@ -28,11 +28,13 @@ public class MyDialog extends JDialog implements ActionListener
 	private JTextField firstname;
 	private JTextField mail;
 	private JTextField number;
+	private MainWindow mainWindow;
 	
-	public MyDialog(Frame p , String title , boolean modal , JFrame o , MainWindow w)
+	public MyDialog(Frame p , String title , boolean modal)
 	{
 		super(p , title , modal);
-		setLocationRelativeTo(o);
+		mainWindow = (MainWindow)p;
+		setLocationRelativeTo(p);
 		init();
 		buttonImg.addActionListener(this);
 		buttonCancel.addActionListener(this);
@@ -108,24 +110,19 @@ public class MyDialog extends JDialog implements ActionListener
 		
 		if(e.getSource() == buttonSave)
 		{
-            try 
-            {
-                PrintWriter file = new PrintWriter(new FileWriter("contacts.txt" , true));  
-                file.println(" " + name.getText() + ";" + " " + firstname.getText() + ";" + " " + mail.getText() + ";" + path.getText()
-                            + ";" + " " + (String)day.getSelectedItem() + " " 
-                            + (String)month.getSelectedItem() + ";" + " " + number.getText());
-                file.close();
-                this.setVisible(false);
-                JOptionPane.showMessageDialog(null , "Contact ajouté avec succès" , "Information" , JOptionPane.INFORMATION_MESSAGE);      
-			} 
-                     
-            catch (IOException ex)
-            {
-                JOptionPane.showMessageDialog(null , "Impossible d'ajouter un contact" , "Erreur" , JOptionPane.ERROR_MESSAGE);
-            }
+			Contact c = new Contact();
+            c.setBirth("2015-" + String.valueOf(month.getSelectedIndex() + 1) + "-" + (String)day.getSelectedItem());
+            c.setName(name.getText());
+            c.setFirstname(firstname.getText());
+            c.setMail(mail.getText());
+            c.setNumber(number.getText());
+            c.setImage(path.getText());
+            mainWindow.ctrl.addContact(c);
+            //ContactManager.getContactManager().create(c);
+            JOptionPane.showMessageDialog(null , "Contact ajouté avec succès" , "Information" , JOptionPane.INFORMATION_MESSAGE);  
+            setVisible(false);
+		} 
                     
-		}
-	
 	}
-
+	
 }

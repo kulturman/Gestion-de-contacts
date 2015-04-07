@@ -39,7 +39,6 @@ public class MainWindow extends JFrame implements Observer
     private JMenu Help;
     private JMenuItem Modify;
     private JMenuItem Delete;
-    private JMenuItem SortByBithDate;
     private JMenuItem SortByName;
     private JMenuItem SortByDate;
     private JMenuItem addContact;
@@ -54,6 +53,7 @@ public class MainWindow extends JFrame implements Observer
         createMenu();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Gestionnaire de contacts");
+		dial = new MyDialog(this , "Ajouter un contact" , true);
 		this.ctrl = ctrl;
 		/*abonnements*/
 		listener = new MyListener();
@@ -110,13 +110,11 @@ public class MainWindow extends JFrame implements Observer
         Modify   = new JMenuItem("Modifier" ,  new ImageIcon("images/edit.png"));
         Delete   = new JMenuItem("Supprimer" , new ImageIcon("images/delete.png")); 
         addContact = new JMenuItem("Nouveau contact" , new ImageIcon("images/add.png"));
-        //SortByBithDate = new JMenuItem("Trier par date d'anniversaire");
         SortByDate = new JMenuItem("Trier par date d'ajout");
         SortByName = new JMenuItem("Trier par nom et prénom");
         Actions.add(addContact);
         Actions.add(Modify);
         Actions.add(Delete);
-        //Contacts.add(SortByBithDate);
         Contacts.add(SortByDate);
         Contacts.add(SortByName);
         Interface.add(MenuBar , BorderLayout.NORTH);
@@ -196,14 +194,14 @@ public class MainWindow extends JFrame implements Observer
 		{
 			if(e.getSource() == deleteButton || e.getSource() == Delete)
 				ctrl.deleteContact(tab.getSelectedRows());
-			if(e.getSource() == addContact)
-				ctrl.addContact();
 			if(e.getSource() == view)
 				ctrl.viewContact(tab.getSelectedRow());
 			if(e.getSource() == SortByDate)
 				ctrl.orderByAddDate();
 			if(e.getSource() == SortByName)
 				ctrl.orderByName();
+			if(e.getSource() == addContact)
+				dial.setVisible(true);;
 		}
 	}
 	
