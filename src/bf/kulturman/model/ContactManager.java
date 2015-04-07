@@ -74,7 +74,7 @@ public class ContactManager
 		Contact c;
 		try
 		{
-			st = db.prepareStatement("SELECT * FROM contact ORDER BY name , firstname");
+			st = db.prepareStatement("SELECT * FROM contact ORDER BY LOWER(name) , LOWER(firstname)");
 			res = st.executeQuery();
 			contacts = new ArrayList<Contact>();
 			while(res.next())
@@ -158,7 +158,7 @@ public class ContactManager
 	{
 		try 
 		{
-			st = db.prepareStatement("SELECT * FROM contact ORDER BY name , firstname");
+			st = db.prepareStatement("SELECT * FROM contact ORDER BY LOWER(name) , LOWER(firstname)");
 			res = st.executeQuery();
 			Contact current;
 			int i = 0;
